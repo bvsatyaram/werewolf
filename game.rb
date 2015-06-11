@@ -14,17 +14,23 @@ class Game
 
   def play
     play_night
+    play_day
   end
 
 private
 
   def play_night
-    announce "It' night time!"
+    announce "It's night time!"
     announce "Everybody slept"
     announce "Wolves wokeup"
-    10.times do
-      wolves_kill_villager
-    end
+    wolves_kill_villager
+  end
+
+  def play_day
+    announce "It's day time!"
+    announce @players.stats
+    kick_after_voting
+    announce @players.stats
   end
 
   def announce(str)
@@ -40,5 +46,11 @@ private
       victim.kill!
       announce "Wolves killed #{victim.inspect}"
     end
+  end
+
+  def kick_after_voting
+    victim = @players.pickVictimByVote
+    victim.kill!
+    announce "The kicked person is: #{victim.role_name}"
   end
 end
