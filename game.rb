@@ -21,7 +21,9 @@ private
     announce "It' night time!"
     announce "Everybody slept"
     announce "Wolves wokeup"
-    wolves_kill_villager
+    10.times do
+      wolves_kill_villager
+    end
   end
 
   def announce(str)
@@ -30,9 +32,16 @@ private
   end
 
   def wolves_kill_villager
-    victim = villagers.sample
-    victim.kill!
-    announce "Wolves killed #{victim.inspect}"
+    villagers_alive = villagers.select do |villager|
+      villager.alive?
+    end
+    victim = villagers_alive.sample
+    if victim.nil?
+      announce "All villagers are dead!"
+    else
+      victim.kill!
+      announce "Wolves killed #{victim.inspect}"
+    end
   end
 
   def villagers

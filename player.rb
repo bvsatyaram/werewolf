@@ -11,4 +11,8 @@ class Player
   def kill!
     @alive = false
   end
+
+  def alive?
+    @alive
+  end
 end
