@@ -1,8 +1,9 @@
+require_relative 'player_collection'
 require_relative 'player'
 
 class Game
   def initialize(no_of_wolves, no_of_villagers)
-    @players = []
+    @players = PlayerCollection.new
     no_of_wolves.times do
       @players.push(Player.new(true))
     end
@@ -32,21 +33,12 @@ private
   end
 
   def wolves_kill_villager
-    villagers_alive = villagers.select do |villager|
-      villager.alive?
-    end
-    victim = villagers_alive.sample
+    victim = @players.villagers.alive.sample
     if victim.nil?
       announce "All villagers are dead!"
     else
       victim.kill!
       announce "Wolves killed #{victim.inspect}"
-    end
-  end
-
-  def villagers
-    return @players.select do |player|
-      !player.wolf?
     end
   end
 end
