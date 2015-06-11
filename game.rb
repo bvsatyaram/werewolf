@@ -1,5 +1,6 @@
 require_relative 'player_collection'
 require_relative 'player'
+require_relative 'voting'
 
 class Game
   def initialize(no_of_wolves, no_of_villagers)
@@ -49,7 +50,7 @@ private
   end
 
   def kick_after_voting
-    victim = @players.pickVictimByVote
+    victim = Voting.new(@players.alive).run
     victim.kill!
     announce "The kicked person is: #{victim.role_name}"
   end
