@@ -13,30 +13,6 @@ class Game
     end
   end
 
-  def simulate(iterations)
-    @hide_output = true
-    villagers = 0
-    wolves = 0
-    draws = 0
-    iterations.times do
-      reset_game
-      play
-      case @winner
-      when 0
-        draws += 1
-      when 1
-        villagers += 1
-      when -1
-        wolves += 1
-      end
-    end
-
-    @hide_output = false
-    announce "Villagers won #{villagers} times"
-    announce "Wolves won #{wolves} times"
-    announce "There were #{draws} draws"
-  end
-
   def play
     while running?
       play_night
@@ -56,13 +32,22 @@ class Game
     announce_result unless @winner.nil?
   end
 
+  def reset
+    @winner = nil
+    resurrect_players
+  end
+
+  def winner
+    @winner
+  end
+
 private
 
   def play_night
     @mode = :night
-    announce "It's night time!"
-    announce "Everybody slept"
-    announce "Wolves wokeup"
+    $logger.log "It's night time!"
+    $logger.log "Everybody slept"
+    $logger.log "Wolves wokeup"
     wolves_kill_villager
   end
 
@@ -70,48 +55,37 @@ private
     @mode = :day
     return unless running?
 
-    announce "It's day time!"
-    announce @players.stats
+    $logger.log "It's day time!"
+    $logger.log @players.stats
     kick_after_voting
-    announce @players.stats
+    $logger.log @players.stats
   end
 
   def announce_result
-    announce "Game Over!"
+    $logger.log "Game Over!"
     if @winner == 0
-      announce "It's draw!"
+      $logger.log "It's draw!"
     elsif @winner == 1
-      announce "Villagers won!"
+      $logger.log "Villagers won!"
     else
-      announce "Wolves won!"
+      $logger.log "Wolves won!"
     end
-  end
-
-  def announce(str)
-    return if @hide_output
-    puts ">> " + str
-    # gets
   end
 
   def wolves_kill_villager
     victim = @players.villagers.alive.sample
     victim.kill!
-    announce "Wolves killed #{victim.name}"
+    $logger.log "Wolves killed #{victim.name}"
   end
 
   def kick_after_voting
     victim = Voting.new(@players.alive).run
     victim.kill!
-    announce "Villagers kicked out #{victim.name}"
+    $logger.log "Villagers kicked out #{victim.name}"
   end
 
   def running?
     return @winner.nil?
-  end
-
-  def reset_game
-    @winner = nil
-    resurrect_players
   end
 
   def resurrect_players
