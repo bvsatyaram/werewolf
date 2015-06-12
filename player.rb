@@ -1,7 +1,8 @@
 class Player
   def initialize(game, is_wolf = false)
     @game = game
-    @is_wolf = is_wolf    
+    @is_wolf = is_wolf
+    @name = wolf? ? "wolf_#{random_name}" : "villager_#{random_name}"   
     @alive = true
   end
 
@@ -18,11 +19,22 @@ class Player
     @alive
   end
 
-  def role_name
-    return (wolf? ? "Wolf" : "Villager")
-  end
-
   def resurrect!
     @alive = true
+  end
+
+  def name
+    @name
+  end
+
+private
+
+  def random_name
+    name = ""
+    5.times do
+      name += rand(10).to_s
+    end
+
+    return name
   end
 end

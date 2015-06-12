@@ -96,13 +96,13 @@ private
   def wolves_kill_villager
     victim = @players.villagers.alive.sample
     victim.kill!
-    announce "Wolves killed #{victim.inspect}"
+    announce "Wolves killed #{victim.name}"
   end
 
   def kick_after_voting
     victim = Voting.new(@players.alive).run
     victim.kill!
-    announce "The kicked person is: #{victim.role_name}"
+    announce "Villagers kicked out #{victim.name}"
   end
 
   def running?
