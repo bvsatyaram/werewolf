@@ -41,15 +41,19 @@ class Game
     while running?
       play_night
       play_day
+
+      if draw? || !running?
+        announce "Game Over!"
+        if draw?
+          @winner = 0
+          announce "It's draw!"
+        else
+          announce "#{winning_team} won!"
+        end
+        return
+      end
     end
 
-    announce "Game Over!"
-    if draw?
-      @winner = 0
-      announce "It's draw!"
-    else
-      announce "#{winning_team} won!"
-    end
   end
 
 private
@@ -63,6 +67,7 @@ private
 
   def play_day
     return unless running?
+    return if draw?
 
     announce "It's day time!"
     announce @players.stats
@@ -89,7 +94,7 @@ private
   end
 
   def running?
-    return !draw? && !(@players.villagers.alive.count == 0 || @players.wolves.alive.count == 0)
+    return !(@players.villagers.alive.count == 0 || @players.wolves.alive.count == 0)
   end
 
   def draw?
