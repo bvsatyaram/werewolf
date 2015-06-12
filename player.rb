@@ -19,4 +19,8 @@ class Player
   def role_name
     return (wolf? ? "Wolf" : "Villager")
   end
+
+  def resurrect!
+    @alive = true
+  end
 end

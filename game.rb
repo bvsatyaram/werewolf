@@ -13,6 +13,28 @@ class Game
     end
   end
 
+  def simulate(iterations)
+    villagers = 0
+    wolves = 0
+    draws = 0
+    iterations.times do
+      resurrect_players
+      play
+      case @winner
+      when 0
+        draws += 1
+      when 1
+        villagers += 1
+      when -1
+        wolves += 1
+      end
+    end
+
+    announce "Villagers won #{villagers} times"
+    announce "Wolves won #{wolves} times"
+    announce "There were #{draws} draws"
+  end
+
   def play
     while running?
       play_night
@@ -21,6 +43,7 @@ class Game
 
     announce "Game Over!"
     if draw?
+      @winner = 0
       announce "It's draw!"
     else
       announce "#{winning_team} won!"
@@ -72,9 +95,17 @@ private
 
   def winning_team
     if @players.villagers.alive.count == 0
+      @winner = -1
       return "Wolves"
     else
+      @winner = 1
       return "Villagers"
+    end
+  end
+
+  def resurrect_players
+    @players.each do |player|
+      player.resurrect!
     end
   end
 end
