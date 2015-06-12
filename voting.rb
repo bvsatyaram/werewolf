@@ -1,7 +1,6 @@
 class Voting
   def initialize(players)
     @players = players
-    @votes = {}
   end
 
   def run
@@ -17,6 +16,7 @@ private
   end
 
   def polling
+    @votes = {}
     @players.villagers.each do |villager|
       votedFor = (@players - [villager]).sample
       addVote(votedFor)
@@ -38,7 +38,6 @@ private
     if victims.size == 1
       return victims.first
     else
-      @votes = {}
       return run
     end
   end
