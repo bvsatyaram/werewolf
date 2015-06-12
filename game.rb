@@ -14,8 +14,17 @@ class Game
   end
 
   def play
-    play_night
-    play_day
+    while running?
+      play_night
+      play_day
+    end
+
+    announce "Game Over!"
+    if draw?
+      announce "It's draw!"
+    else
+      announce "#{winning_team} won!"
+    end
   end
 
 private
@@ -28,6 +37,8 @@ private
   end
 
   def play_day
+    return unless running?
+
     announce "It's day time!"
     announce @players.stats
     kick_after_voting
@@ -41,17 +52,29 @@ private
 
   def wolves_kill_villager
     victim = @players.villagers.alive.sample
-    if victim.nil?
-      announce "All villagers are dead!"
-    else
-      victim.kill!
-      announce "Wolves killed #{victim.inspect}"
-    end
+    victim.kill!
+    announce "Wolves killed #{victim.inspect}"
   end
 
   def kick_after_voting
     victim = Voting.new(@players.alive).run
     victim.kill!
     announce "The kicked person is: #{victim.role_name}"
+  end
+
+  def running?
+    return !draw? && !(@players.villagers.alive.count == 0 || @players.wolves.alive.count == 0)
+  end
+
+  def draw?
+    return @players.villagers.alive.count == 1 && @players.wolves.alive.count == 1
+  end
+
+  def winning_team
+    if @players.villagers.alive.count == 0
+      return "Wolves"
+    else
+      return "Villagers"
+    end
   end
 end
