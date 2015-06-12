@@ -1,5 +1,6 @@
 class Player
-  def initialize(is_wolf = false)
+  def initialize(game, is_wolf = false)
+    @game = game
     @is_wolf = is_wolf    
     @alive = true
   end
@@ -10,6 +11,7 @@ class Player
 
   def kill!
     @alive = false
+    @game.announce_result_if_over
   end
 
   def alive?

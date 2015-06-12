@@ -6,10 +6,10 @@ class Game
   def initialize(no_of_wolves, no_of_villagers)
     @players = PlayerCollection.new
     no_of_wolves.times do
-      @players.push(Player.new(true))
+      @players.push(Player.new(self, true))
     end
     no_of_villagers.times do
-      @players.push(Player.new)
+      @players.push(Player.new(self))
     end
   end
 
@@ -19,7 +19,7 @@ class Game
     wolves = 0
     draws = 0
     iterations.times do
-      resurrect_players
+      reset_game
       play
       case @winner
       when 0
@@ -41,24 +41,25 @@ class Game
     while running?
       play_night
       play_day
+    end
+  end
 
-      if draw? || !running?
-        announce "Game Over!"
-        if draw?
-          @winner = 0
-          announce "It's draw!"
-        else
-          announce "#{winning_team} won!"
-        end
-        return
-      end
+  def announce_result_if_over
+    if @players.villagers.alive.count == 0
+      @winner = -1
+    elsif @players.wolves.alive.count == 0
+      @winner = 1
+    elsif @mode == :night && (@players.villagers.alive.count == 1 && @players.wolves.alive.count == 1)
+      @winner = 0
     end
 
+    announce_result unless @winner.nil?
   end
 
 private
 
   def play_night
+    @mode = :night
     announce "It's night time!"
     announce "Everybody slept"
     announce "Wolves wokeup"
@@ -66,13 +67,24 @@ private
   end
 
   def play_day
+    @mode = :day
     return unless running?
-    return if draw?
 
     announce "It's day time!"
     announce @players.stats
     kick_after_voting
     announce @players.stats
+  end
+
+  def announce_result
+    announce "Game Over!"
+    if @winner == 0
+      announce "It's draw!"
+    elsif @winner == 1
+      announce "Villagers won!"
+    else
+      announce "Wolves won!"
+    end
   end
 
   def announce(str)
@@ -94,21 +106,12 @@ private
   end
 
   def running?
-    return !(@players.villagers.alive.count == 0 || @players.wolves.alive.count == 0)
+    return @winner.nil?
   end
 
-  def draw?
-    return @players.villagers.alive.count == 1 && @players.wolves.alive.count == 1
-  end
-
-  def winning_team
-    if @players.villagers.alive.count == 0
-      @winner = -1
-      return "Wolves"
-    else
-      @winner = 1
-      return "Villagers"
-    end
+  def reset_game
+    @winner = nil
+    resurrect_players
   end
 
   def resurrect_players
