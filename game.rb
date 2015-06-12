@@ -14,6 +14,7 @@ class Game
   end
 
   def simulate(iterations)
+    @hide_output = true
     villagers = 0
     wolves = 0
     draws = 0
@@ -30,6 +31,7 @@ class Game
       end
     end
 
+    @hide_output = false
     announce "Villagers won #{villagers} times"
     announce "Wolves won #{wolves} times"
     announce "There were #{draws} draws"
@@ -69,6 +71,7 @@ private
   end
 
   def announce(str)
+    return if @hide_output
     puts ">> " + str
     # gets
   end
