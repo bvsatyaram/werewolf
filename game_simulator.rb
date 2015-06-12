@@ -15,11 +15,11 @@ class GameSimulator
       @game.reset
       @game.play
       case @game.winner
-      when 0
+      when Game::ResultCode::DRAW
         @draws_wins += 1
-      when 1
+      when Game::ResultCode::VILLAGERS
         @villagers_wins += 1
-      when -1
+      when Game::ResultCode::WOLVES
         @wolves_wins += 1
       end
     end

@@ -3,6 +3,12 @@ require_relative 'player'
 require_relative 'voting'
 
 class Game
+  module ResultCode
+    VILLAGERS = 1
+    WOLVES    = -1
+    DRAW      = 0
+  end
+
   def initialize(no_of_wolves, no_of_villagers)
     @players = PlayerCollection.new
     no_of_wolves.times do
@@ -22,11 +28,11 @@ class Game
 
   def announce_result_if_over
     if @players.villagers.alive.count == 0
-      @winner = -1
+      @winner = ResultCode::WOLVES
     elsif @players.wolves.alive.count == 0
-      @winner = 1
+      @winner = ResultCode::VILLAGERS
     elsif @mode == :night && (@players.villagers.alive.count == 1 && @players.wolves.alive.count == 1)
-      @winner = 0
+      @winner = ResultCode::DRAW
     end
 
     announce_result unless @winner.nil?
@@ -63,9 +69,9 @@ private
 
   def announce_result
     $logger.log "Game Over!"
-    if @winner == 0
+    if @winner == ResultCode::DRAW
       $logger.log "It's draw!"
-    elsif @winner == 1
+    elsif @winner == ResultCode::VILLAGERS
       $logger.log "Villagers won!"
     else
       $logger.log "Wolves won!"
