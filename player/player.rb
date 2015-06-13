@@ -15,6 +15,10 @@ class Player
     @role == Role::WOLF
   end
 
+  def doctor?
+    @role == Role::DOCTOR
+  end
+
   def kill!
     @alive = false
     @game.announce_result_if_over
@@ -30,6 +34,22 @@ class Player
 
   def name
     @name
+  end
+
+  def game
+    @game
+  end
+
+  def save_for_night!
+    @saved_for_night = true
+  end
+
+  def saved_for_night?
+    @saved_for_night
+  end
+
+  def reset_saved_for_night!
+    @saved_for_night = false
   end
 
 protected

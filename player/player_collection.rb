@@ -29,6 +29,14 @@ class PlayerCollection < Array
     return PlayerCollection.new(players)
   end
 
+  def doctor
+    players = self.select do |player|
+      player.doctor?
+    end
+
+    return players.first
+  end
+
   def alive
     players = self.select do |player|
       player.alive?
@@ -39,5 +47,11 @@ class PlayerCollection < Array
 
   def stats
     "There are #{villagers.alive.count} villagers and #{wolves.alive.count} wolves"
+  end
+
+  def reset_saved_for_night!
+    self.each do |player|
+      player.reset_saved_for_night!
+    end
   end
 end

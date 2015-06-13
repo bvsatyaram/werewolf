@@ -51,8 +51,10 @@ private
 
   def play_night
     @mode = :night
+    @players.reset_saved_for_night!
     $logger.log "It's night time!"
     $logger.log "Everybody slept"
+    @players.doctor.save_player
     $logger.log "Wolves wokeup"
     wolves_kill_villager
   end
@@ -80,8 +82,13 @@ private
 
   def wolves_kill_villager
     victim = @players.villagers.alive.sample
-    victim.kill!
-    $logger.log "Wolves killed #{victim.name}"
+    if victim.saved_for_night?
+      $logger.log "Wolves chose to kill #{victim.name}, but saved by the doctor"
+      announce_result_if_over
+    else
+      victim.kill!
+      $logger.log "Wolves killed #{victim.name}"
+    end
   end
 
   def kick_after_voting
