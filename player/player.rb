@@ -1,4 +1,10 @@
 class Player
+  module Role
+    WOLF = 1
+    DOCTOR = 2
+    SIMPLE_VILLAGER = 3
+  end
+
   def initialize(game)
     @game = game
     @alive = true
@@ -6,7 +12,7 @@ class Player
   end
 
   def wolf?
-    @is_wolf
+    @role == Role::WOLF
   end
 
   def kill!

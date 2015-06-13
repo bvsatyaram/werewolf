@@ -3,7 +3,7 @@ require_relative 'player'
 class Villager < Player
   def initialize(game)
     super(game)
-    @is_wolf = false
+    @role = Player::Role::SIMPLE_VILLAGER
   end
 
   def pick_victim_by_voting
@@ -12,6 +12,6 @@ class Villager < Player
 
 protected
   def name_prefix
-    "villager_"
+    "Villager_"
   end
 end

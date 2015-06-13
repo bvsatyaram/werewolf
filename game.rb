@@ -12,12 +12,7 @@ class Game
 
   def initialize(no_of_wolves, no_of_villagers)
     @players = PlayerCollection.new
-    no_of_wolves.times do
-      @players.push(Wolf.new(self))
-    end
-    no_of_villagers.times do
-      @players.push(Villager.new(self))
-    end
+    @players.add_players(self, no_of_wolves, no_of_villagers)
   end
 
   def play

@@ -3,7 +3,7 @@ require_relative 'player'
 class Wolf < Player
   def initialize(game)
     super(game)
-    @is_wolf = true
+    @role = Player::Role::WOLF
   end
 
   def pick_victim_by_voting
@@ -12,6 +12,6 @@ class Wolf < Player
 
 protected
   def name_prefix
-    "wolf_"
+    "Wolf_"
   end
 end
