@@ -30,11 +30,11 @@ class Player
 private
 
   def random_name
-    name = ""
+    str = ""
     5.times do
-      name += rand(10).to_s
+      str += rand(10).to_s
     end
 
-    return name
+    return str
   end
 end
