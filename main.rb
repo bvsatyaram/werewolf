@@ -1,4 +1,4 @@
-require_relative 'logger'
+require_relative 'utils/logger'
 $logger = Logger.new
 
 require_relative 'game'

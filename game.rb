@@ -1,6 +1,6 @@
-require_relative 'player_collection'
-require_relative 'player'
-require_relative 'voting'
+require_relative 'player/player_collection'
+require_relative 'player/player'
+require_relative 'player/voting'
 
 class Game
   module ResultCode
