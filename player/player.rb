@@ -1,11 +1,4 @@
 class Player
-  def initialize(game, is_wolf = false)
-    @game = game
-    @is_wolf = is_wolf
-    @name = wolf? ? "wolf_#{random_name}" : "villager_#{random_name}"   
-    @alive = true
-  end
-
   def wolf?
     @is_wolf
   end
@@ -27,7 +20,7 @@ class Player
     @name
   end
 
-private
+protected
 
   def random_name
     str = ""

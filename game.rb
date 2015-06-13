@@ -1,5 +1,6 @@
 require_relative 'player/player_collection'
-require_relative 'player/player'
+require_relative 'player/wolf'
+require_relative 'player/villager'
 require_relative 'player/voting'
 
 class Game
@@ -12,10 +13,10 @@ class Game
   def initialize(no_of_wolves, no_of_villagers)
     @players = PlayerCollection.new
     no_of_wolves.times do
-      @players.push(Player.new(self, true))
+      @players.push(Wolf.new(self))
     end
     no_of_villagers.times do
-      @players.push(Player.new(self))
+      @players.push(Villager.new(self))
     end
   end
 
