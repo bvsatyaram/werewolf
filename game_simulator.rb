@@ -28,5 +28,7 @@ class GameSimulator
     $logger.log "Villagers won #{@villagers_wins} times"
     $logger.log "Wolves won #{@wolves_wins} times"
     $logger.log "There were #{@draws_wins} draws"
+
+    return percentage_villagers_win = (@villagers_wins + 0.5*@draws_wins)*100/iterations
   end
 end
