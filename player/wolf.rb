@@ -6,6 +6,10 @@ class Wolf < Player
     @is_wolf = true
   end
 
+  def pick_victim_by_voting
+    return @game.players.villagers.alive.sample
+  end
+
 protected
   def name_prefix
     "wolf_"

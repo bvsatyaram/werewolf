@@ -17,13 +17,8 @@ private
 
   def polling
     @votes = {}
-    @players.villagers.each do |villager|
-      votedFor = (@players - [villager]).sample
-      addVote(votedFor)
-    end
-
-    @players.wolves.each do |wolf|
-      votedFor = @players.villagers.sample
+    @players.alive.each do |player|
+      votedFor = player.pick_victim_by_voting
       addVote(votedFor)
     end
   end

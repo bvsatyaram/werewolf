@@ -48,6 +48,10 @@ class Game
     @winner
   end
 
+  def players
+    @players
+  end
+
 private
 
   def play_night
