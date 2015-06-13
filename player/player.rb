@@ -1,4 +1,10 @@
 class Player
+  def initialize(game)
+    @game = game
+    @alive = true
+    @name = name_prefix + random_name
+  end
+
   def wolf?
     @is_wolf
   end

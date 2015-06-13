@@ -2,9 +2,12 @@ require_relative 'player'
 
 class Wolf < Player
   def initialize(game)
-    @game = game
+    super(game)
     @is_wolf = true
-    @name = "wolf_#{random_name}"
-    @alive = true
+  end
+
+protected
+  def name_prefix
+    "wolf_"
   end
 end
