@@ -1,3 +1,5 @@
+require_relative 'game_simulator'
+
 class RoleSuggestor
   def initialize(players_count)
     @players_count = players_count

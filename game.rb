@@ -1,6 +1,7 @@
-require_relative 'player_collection'
-require_relative 'player'
-require_relative 'voting'
+require_relative 'player/player_collection'
+require_relative 'player/wolf'
+require_relative 'player/villager'
+require_relative 'player/voting'
 
 class Game
   module ResultCode
@@ -11,12 +12,7 @@ class Game
 
   def initialize(no_of_wolves, no_of_villagers)
     @players = PlayerCollection.new
-    no_of_wolves.times do
-      @players.push(Player.new(self, true))
-    end
-    no_of_villagers.times do
-      @players.push(Player.new(self))
-    end
+    @players.add_players(self, no_of_wolves, no_of_villagers)
   end
 
   def play
@@ -47,12 +43,18 @@ class Game
     @winner
   end
 
+  def players
+    @players
+  end
+
 private
 
   def play_night
     @mode = :night
+    @players.reset_saved_for_night!
     $logger.log "It's night time!"
     $logger.log "Everybody slept"
+    @players.doctor.save_player
     $logger.log "Wolves wokeup"
     wolves_kill_villager
   end
@@ -80,8 +82,13 @@ private
 
   def wolves_kill_villager
     victim = @players.villagers.alive.sample
-    victim.kill!
-    $logger.log "Wolves killed #{victim.name}"
+    if victim.saved_for_night?
+      $logger.log "Wolves chose to kill #{victim.name}, but saved by the doctor"
+      announce_result_if_over
+    else
+      victim.kill!
+      $logger.log "Wolves killed #{victim.name}"
+    end
   end
 
   def kick_after_voting
