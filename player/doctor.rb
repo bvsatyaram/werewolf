@@ -7,6 +7,7 @@ class Doctor < Villager
   end
 
   def save_player
+
     if self.alive?
       # TODO: Use AI in making this choice
       if rand(10) < 5

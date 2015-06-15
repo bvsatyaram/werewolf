@@ -3,6 +3,7 @@ class Player
     WOLF = 1
     DOCTOR = 2
     SIMPLE_VILLAGER = 3
+    COP = 4
   end
 
   def initialize(game)

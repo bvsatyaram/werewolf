@@ -1,6 +1,7 @@
 require_relative 'wolf'
 require_relative 'villager'
 require_relative 'doctor'
+require_relative 'cop'
 
 class PlayerCollection < Array
 
@@ -13,6 +14,7 @@ class PlayerCollection < Array
     (no_of_villagers - 2).times do
       self.push(Villager.new(game))
     end
+    
   end
 
   def villagers
