@@ -1,3 +1,6 @@
+require_relative 'cop'
+require_relative 'player_collection'
+
 class Voting
   def initialize(players)
     @players = players
@@ -17,9 +20,13 @@ private
 
   def polling
     @votes = {}
-    @players.alive.each do |player|
+
+    (@players.alive - [@players.cop]).each do |player|
       votedFor = player.pick_victim_by_voting
       addVote(votedFor)
+    end
+    if @players.cop != nil
+      addVote(@players.cop.cop_voting(@votes))
     end
   end
 

@@ -13,7 +13,6 @@ class Game
   def initialize(no_of_wolves, no_of_villagers)
     @players = PlayerCollection.new
     @players.add_players(self, no_of_wolves, no_of_villagers)
-    $logger.log "$$$$$$$$$$$$$$$$$$$$$$$#{@players} +++++++++++++++++++++++ #{@players.first}"
   end
 
   def play
