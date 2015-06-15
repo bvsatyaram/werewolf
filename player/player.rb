@@ -2,7 +2,8 @@ class Player
   module Role
     WOLF = 1
     DOCTOR = 2
-    SIMPLE_VILLAGER = 3
+    COP = 3
+    SIMPLE_VILLAGER = 4
   end
 
   def initialize(game)
