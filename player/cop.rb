@@ -1,6 +1,7 @@
 require_relative "player"
 
 class Cop < Villager
+  
   def intialize(game)
     super(game)
     @role = Player::Role::COP
@@ -15,6 +16,9 @@ class Cop < Villager
         $logger.log "Cop has identified a villager #{@identified_player}"
       end
       return @identified_player
+    else
+      $logger.log "Cop is dead"
     end
   end
+
 end
