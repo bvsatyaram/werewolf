@@ -17,9 +17,17 @@ private
 
   def polling
     @votes = {}
-    @players.alive.each do |player|
+    (@players.alive - [@players.cop]).each do |player|
       votedFor = player.pick_victim_by_voting
       addVote(votedFor)
+    end
+    #Cop votes now, based on others votes
+    cop = @players.cop
+    if cop && cop.alive?
+      votedFor = cop.pick_victim_by_voting(@votes)
+      addVote(votedFor)
+    else
+      $logger.log "Cop is dead to vote"
     end
   end
 

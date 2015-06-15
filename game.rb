@@ -55,6 +55,7 @@ private
     $logger.log "It's night time!"
     $logger.log "Everybody slept"
     @players.doctor.save_player
+    @players.cop.identify_player
     $logger.log "Wolves wokeup"
     wolves_kill_villager
   end
