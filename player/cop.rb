@@ -26,9 +26,10 @@ class Cop < Villager
     end
   end
 
-  def pick_victim_by_voting
-    if @identified_wolves.alive.any?
-      victim =  @identified_wolves.alive.sample
+  def pick_victim_by_voting(votes)
+    wolves = @identified_wolves.alive
+    if wolves.any?
+      victim = pick_wolf_to_kick(wolves, votes)
     else
       victim = (@game.players.alive - [self] - @identified_villagers).sample
     end
@@ -39,5 +40,26 @@ class Cop < Villager
 protected
   def name_prefix
     "Cop_"
+  end
+
+private
+
+  def pick_wolf_to_kick(wolves, votes)
+    if wolves.count > 1
+      highest_votes = -1
+      leading_wolves = []
+      wolves.each do |wolf|
+        if votes[wolf] == highest_votes
+          leading_wolves.push(wolf)
+        else
+          leading_wolves = [wolf]
+        end
+      end
+      victim = leading_wolves.sample
+    else
+      victim = wolves.first
+    end
+
+    return victim
   end
 end
