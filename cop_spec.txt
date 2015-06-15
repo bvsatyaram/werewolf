@@ -1,1 +1,4 @@
 - Cop should be created only if more than 2 villagers are to be created
+- Cop identifies one of the players excluding himself and already identified players. If none is left to be identified, then identify none.
+- If cop identified any wolfthat is still alive, then he should vote for one of the identified wolf
+- If none of the identified wolves are alive, then the cop votes for a random villager among all villagers excluding identified villagers and the cop himself
