@@ -18,35 +18,35 @@ class PlayerCollection < Array
   end
 
   def villagers
-    players = self.select do |player|
+    players_villagers = self.select do |player|
       !player.wolf?
     end
 
-    return PlayerCollection.new(players)
+    return PlayerCollection.new(players_villagers)
   end
 
   def wolves
-    players = self.select do |player|
+    players_wolves = self.select do |player|
       player.wolf?
     end
 
-    return PlayerCollection.new(players)
+    return PlayerCollection.new(players_wolves)
   end
 
   def doctor
-    players = self.select do |player|
+    players_doctor = self.select do |player|
       player.doctor?
     end
 
-    return players.first
+    return players_doctor.first
   end
 
   def cop
-    players = self.select do |player|
+    players_cop = self.select do |player|
       player.cop?
     end
 
-    return players.first
+    return players_cop.first
   end
 
   def alive
