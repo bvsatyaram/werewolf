@@ -3,12 +3,14 @@ require_relative 'villager'
 require_relative 'doctor'
 
 class PlayerCollection < Array
+
   def add_players(game, no_of_wolves, no_of_villagers)
     no_of_wolves.times do
       self.push(Wolf.new(game))
     end
     self.push(Doctor.new(game))
-    (no_of_villagers - 1).times do
+    self.push(Cop.new(game))
+    (no_of_villagers - 2).times do
       self.push(Villager.new(game))
     end
   end
@@ -43,6 +45,10 @@ class PlayerCollection < Array
     end
 
     return players.first
+  end
+
+  def identified_players
+    @identified_players = @identified_players || []
   end
 
   def alive
