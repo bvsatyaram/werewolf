@@ -50,9 +50,9 @@ class Cop < Villager
 
   def pick_victim_by_voting
     if identified_players.last.wolf?
-      voted_by_cop = @game.players.identified_players.last
+      voted_by_cop = identified_players.last
     elsif !identified_wolves.empty?
-      voted_by_cop = live_players(@game.players.identified_wolves).sample if !@game.players.identified_wolves.alive.empty?        
+      voted_by_cop = live_players(identified_wolves).sample if !live_players(identified_wolves).empty?        
     else
       voted_by_cop = live_players(@game.players-identified_villagers-[self]).sample
     end
