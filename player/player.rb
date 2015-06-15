@@ -19,6 +19,10 @@ class Player
     @role == Role::DOCTOR
   end
 
+  def cop?
+    @role == Role::COP
+  end
+
   def kill!
     @alive = false
     @game.announce_result_if_over

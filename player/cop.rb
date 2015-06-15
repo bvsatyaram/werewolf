@@ -1,9 +1,11 @@
 require_relative "player"
+
 class Cop < Villager
   def intialize(game)
     super(game)
     @role = Player::Role::COP
   end
+
   def indentify_player
     if self.alive?
       @identified_player = @players.alive.sample
