@@ -39,6 +39,14 @@ class PlayerCollection < Array
     return players.first
   end
 
+  def cop
+    players = self.select do |player|
+      player.cop?
+    end
+
+    return players.first
+  end
+
   def alive
     players = self.select do |player|
       player.alive?
