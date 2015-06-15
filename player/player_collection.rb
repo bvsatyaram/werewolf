@@ -14,7 +14,7 @@ class PlayerCollection < Array
     (no_of_villagers - 2).times do
       self.push(Villager.new(game))
     end
-    
+
   end
 
   def villagers
@@ -49,16 +49,14 @@ class PlayerCollection < Array
     return players.first
   end
 
-  def identified_players
-    @identified_players = @identified_players || []
-  end
+
 
   def alive
     players = self.select do |player|
       player.alive?
     end
 
-    return PlayerCollection.new(players)
+     return PlayerCollection.new(players)
   end
 
   def stats
