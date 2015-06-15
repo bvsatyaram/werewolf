@@ -54,10 +54,17 @@ private
     @players.reset_saved_for_night!
     $logger.log "It's night time!"
     $logger.log "Everybody slept"
-    $logger.log "Doctor woke up"
-    @players.doctor.save_player
-    $logger.log "Cop woke up"
-    @players.cop.identify_player
+    
+    if (@players.doctor.alive?)
+      $logger.log "Doctor woke up"
+      @players.doctor.save_player
+    end
+
+    if (@players.cop.alive?)
+      $logger.log "Cop woke up"
+      @players.cop.identify_player
+    end
+
     $logger.log "Wolves wokeup"
     wolves_kill_villager
   end
