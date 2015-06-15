@@ -13,6 +13,7 @@ class Game
   def initialize(no_of_wolves, no_of_villagers)
     @players = PlayerCollection.new
     @players.add_players(self, no_of_wolves, no_of_villagers)
+    $logger.log "$$$$$$$$$$$$$$$$$$$$$$$#{@players} +++++++++++++++++++++++ #{@players.first}"
   end
 
   def play
@@ -54,7 +55,10 @@ private
     @players.reset_saved_for_night!
     $logger.log "It's night time!"
     $logger.log "Everybody slept"
+    $logger.log "Doctor woke up"
     @players.doctor.save_player
+    $logger.log "Cop woke up"
+    @players.cop.identify_player
     $logger.log "Wolves wokeup"
     wolves_kill_villager
   end
