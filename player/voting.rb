@@ -21,7 +21,7 @@ private
       votedFor = player.pick_victim_by_voting
       addVote(votedFor)
     end
-    
+
   end
 
   def pick_leader

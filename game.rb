@@ -3,6 +3,7 @@ require_relative 'player/wolf'
 require_relative 'player/villager'
 require_relative 'player/voting'
 require_relative 'player/cop'
+
 class Game
   module ResultCode
     VILLAGERS = 1
