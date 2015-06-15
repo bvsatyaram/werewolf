@@ -10,13 +10,11 @@ class PlayerCollection < Array
       self.push(Wolf.new(game))
     end
     self.push(Doctor.new(game))
-    (no_of_villagers - 1).times do
+     self.push(Cop.new(game))
+    (no_of_villagers - 2).times do
       self.push(Villager.new(game))
     end
-    self.push(Cop.new(game))
-    (no_of_villagers - 1).times do
-      self.push(Villager.new(game))
-    end
+   
   end
 
   def villagers
@@ -49,7 +47,6 @@ class PlayerCollection < Array
     end
     return players.first
   end
-
 
   def alive
     players = self.select do |player|

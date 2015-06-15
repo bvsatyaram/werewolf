@@ -23,7 +23,7 @@ class Player
   def cop?
     @role == Role::COP
   end
-  
+
   def kill!
     @alive = false
     @game.announce_result_if_over
@@ -32,6 +32,8 @@ class Player
   def alive?
     @alive
   end
+
+ 
 
   def resurrect!
     @alive = true
