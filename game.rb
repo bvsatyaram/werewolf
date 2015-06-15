@@ -2,7 +2,7 @@ require_relative 'player/player_collection'
 require_relative 'player/wolf'
 require_relative 'player/villager'
 require_relative 'player/voting'
-
+require_relative 'player/cop'
 class Game
   module ResultCode
     VILLAGERS = 1
@@ -54,7 +54,9 @@ private
     @players.reset_saved_for_night!
     $logger.log "It's night time!"
     $logger.log "Everybody slept"
-    @players.doctor.save_player
+    @players.doctor.save_player 
+    $logger.log "Cop woke up"
+    @players.cop.identifies_player
     $logger.log "Wolves wokeup"
     wolves_kill_villager
   end

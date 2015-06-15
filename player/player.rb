@@ -3,6 +3,7 @@ class Player
     WOLF = 1
     DOCTOR = 2
     SIMPLE_VILLAGER = 3
+    COP = 4 
   end
 
   def initialize(game)
@@ -18,7 +19,11 @@ class Player
   def doctor?
     @role == Role::DOCTOR
   end
-
+  
+  def cop?
+    @role == Role::COP
+  end
+  
   def kill!
     @alive = false
     @game.announce_result_if_over
