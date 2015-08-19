@@ -1,37 +1,52 @@
 require_relative 'wolf'
 require_relative 'villager'
 require_relative 'doctor'
+require_relative 'cop'
 
 class PlayerCollection < Array
   def add_players(game, no_of_wolves, no_of_villagers)
     no_of_wolves.times do
       self.push(Wolf.new(game))
     end
-    self.push(Doctor.new(game))
-    (no_of_villagers - 1).times do
+
+    @doctor = Doctor.new(game)
+    self.push(@doctor)
+    
+    @cop = Cop.new(game)
+    self.push(@cop)
+
+    (no_of_villagers - 2).times do
       self.push(Villager.new(game))
     end
   end
 
   def villagers
-    players = self.select do |player|
+    players_villagers = self.select do |player|
       !player.wolf?
     end
 
-    return PlayerCollection.new(players)
+    return PlayerCollection.new(players_villagers)
   end
 
   def wolves
-    players = self.select do |player|
+    players_wolves = self.select do |player|
       player.wolf?
     end
 
-    return PlayerCollection.new(players)
+    return PlayerCollection.new(players_wolves)
   end
 
   def doctor
-    players = self.select do |player|
+    players =  self.select do |player|
       player.doctor?
+    end
+
+    return players.first
+  end
+
+  def cop
+    players =  self.select do |player|
+      player.cop?
     end
 
     return players.first

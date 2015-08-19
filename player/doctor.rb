@@ -1,4 +1,4 @@
-require_relative 'player'
+require_relative 'villager'
 
 class Doctor < Villager
   def initialize(game)
